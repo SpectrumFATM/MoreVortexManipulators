@@ -1,0 +1,7 @@
+{
+  "gui.vm.bioscanner.title": "Bio-Scanner",
+  "gui.vm.bioscanner.name": "Name:",
+  "gui.vm.bioscanner.scan": "Scan",
+  "gui.vm.bioscanner.instruct": "(Scan a nearby player)",
+  "function.vm.vortexmanipulators.bioscanner": "Bio-Scanner"
+}
