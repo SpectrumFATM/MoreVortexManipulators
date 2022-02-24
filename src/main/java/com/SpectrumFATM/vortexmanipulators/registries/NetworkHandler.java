@@ -2,6 +2,9 @@ package com.SpectrumFATM.vortexmanipulators.registries;
 
 import com.SpectrumFATM.vortexmanipulators.VortexM;
 import com.SpectrumFATM.vortexmanipulators.network.PacketBioScan;
+import com.SpectrumFATM.vortexmanipulators.network.PacketDeleteWaypoint;
+import com.SpectrumFATM.vortexmanipulators.network.PacketSaveWaypoint;
+import com.SpectrumFATM.vortexmanipulators.network.PacketTeleportHandler;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
@@ -25,5 +28,23 @@ public class NetworkHandler {
                 PacketBioScan::toBytes,
                 PacketBioScan::new,
                 PacketBioScan::handle);
+
+        INSTANCE.registerMessage(nextID(),
+                PacketSaveWaypoint.class,
+                PacketSaveWaypoint::toBytes,
+                PacketSaveWaypoint::new,
+                PacketSaveWaypoint::handle);
+
+        INSTANCE.registerMessage(nextID(),
+                PacketTeleportHandler.class,
+                PacketTeleportHandler::toBytes,
+                PacketTeleportHandler::new,
+                PacketTeleportHandler::handle);
+
+        INSTANCE.registerMessage(nextID(),
+                PacketDeleteWaypoint.class,
+                PacketDeleteWaypoint::toBytes,
+                PacketDeleteWaypoint::new,
+                PacketDeleteWaypoint::handle);
     }
 }
