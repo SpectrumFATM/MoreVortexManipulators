@@ -26,7 +26,6 @@ public class VMWaypoint extends VortexMFunctionScreen {
 
     private final TranslationTextComponent title = new TranslationTextComponent("gui.vm.waypoints.title");
 
-    private TextFieldWidget saveName;
     private Button delete;
     private Button left;
     private Button right;
@@ -38,76 +37,44 @@ public class VMWaypoint extends VortexMFunctionScreen {
     private String option = "";
     private ClientPlayerEntity playerEntity = Minecraft.getInstance().player;
     private CompoundNBT nbt;
-    private RegistryKey<World> selectedWorld;
     private List<RegistryKey<World>> worldKeys = new ArrayList();
+    private ItemStack mainStack = Minecraft.getInstance().player.getMainHandItem();
+    private ItemStack offStack = Minecraft.getInstance().player.getOffhandItem();
     private int x;
     private int y;
     private int z;
     private String dim;
 
     @Override
-    public void tick() {
-        ItemStack mainStack = Minecraft.getInstance().player.getMainHandItem();
-        ItemStack offStack = Minecraft.getInstance().player.getOffhandItem();
+    public void init() {
         if (mainStack.getItem() == TItems.VORTEX_MANIP.get()) {
             nbt = mainStack.getTag();
-            if (nbt != null) {
-                if (nbt.getList("waypoints", Constants.NBT.TAG_COMPOUND) != null) {
-                    option = nbt.getList("waypoints", Constants.NBT.TAG_COMPOUND).getCompound(selected - 1).getString("name");
-                    maxSelected = nbt.getList("waypoints", Constants.NBT.TAG_COMPOUND).toArray().length;
-                    x = nbt.getList("waypoints", Constants.NBT.TAG_COMPOUND).getCompound(selected - 1).getInt("x");
-                    y = nbt.getList("waypoints", Constants.NBT.TAG_COMPOUND).getCompound(selected - 1).getInt("y");
-                    z = nbt.getList("waypoints", Constants.NBT.TAG_COMPOUND).getCompound(selected - 1).getInt("z");
-                    dim = nbt.getList("waypoints", Constants.NBT.TAG_COMPOUND).getCompound(selected - 1).getString("dim");
-                }
-            }
-        } else if (offStack.getItem() == TItems.VORTEX_MANIP.get()) {
-            nbt = offStack.getTag();
-            if (nbt != null) {
-                if (nbt.getList("waypoints", Constants.NBT.TAG_COMPOUND) != null) {
-                    option = nbt.getList("waypoints", Constants.NBT.TAG_COMPOUND).getCompound(selected - 1).getString("name");
-                    maxSelected = nbt.getList("waypoints", Constants.NBT.TAG_COMPOUND).toArray().length;
-                    x = nbt.getList("waypoints", Constants.NBT.TAG_COMPOUND).getCompound(selected - 1).getInt("x");
-                    y = nbt.getList("waypoints", Constants.NBT.TAG_COMPOUND).getCompound(selected - 1).getInt("y");
-                    z = nbt.getList("waypoints", Constants.NBT.TAG_COMPOUND).getCompound(selected - 1).getInt("z");
-                    dim = nbt.getList("waypoints", Constants.NBT.TAG_COMPOUND).getCompound(selected - 1).getString("dim");
-                }
-            }
+        } else if (offStack.getItem() == TItems.VORTEX_MANIP.get()){
+            nbt=offStack.getTag();
         }
-    }
-
-    @Override
-    public void init() {
-        this.saveName = new TextFieldWidget(this.font, this.width / 2 - 75, this.height / 2 - 10, 150, 20, new TranslationTextComponent(""));
-        this.saveName.isFocused();
-        this.saveName.setTextColor(16777215);
-        this.children.add(this.saveName);
-        this.right = new Button(this.width / 2 + 21, this.height / 2, 20, 20, new TranslationTextComponent(">"), (p_213031_1_) -> {
+        this.right = new Button(this.width / 2 + 21, this.height / 2, 20, 20, new TranslationTextComponent(">"), (rightPress) -> {
             selected += 1;
             if (selected > maxSelected) {
                 selected = maxSelected;
             }
-            VortexM.LOGGER.info(selected);
         });
-        this.left = new Button(this.width / 2 - 61, this.height / 2, 20, 20, new TranslationTextComponent("<"), (p_213031_1_) -> {
+        this.left = new Button(this.width / 2 - 61, this.height / 2, 20, 20, new TranslationTextComponent("<"), (leftPress) -> {
             selected -= 1;
             if (selected < 1) {
                 selected = 1;
             }
-            VortexM.LOGGER.info(selected);
         });
 
-        this.enter = new Button(this.width / 2 + 43, this.height / 2, 40, 20, new TranslationTextComponent("Enter"), (onPress) -> {
+        this.enter = new Button(this.width / 2 + 43, this.height / 2, 40, 20, new TranslationTextComponent("Enter"), (enterPress) -> {
             NetworkHandler.INSTANCE.sendToServer(new PacketTeleportHandler(dim, x, y, z));
         });
-        this.delete = new Button(this.width / 2 - 104, this.height / 2, 40, 20, new TranslationTextComponent("Delete"), (onPress) -> {
-            if (nbt.getList("waypoints", Constants.NBT.TAG_COMPOUND) != null) {
-                NetworkHandler.INSTANCE.sendToServer(new PacketDeleteWaypoint(selected - 1));
-                Minecraft.getInstance().setScreen(null);
-                PlayerHelper.closeVMModel(this.minecraft.player);
-            }
+        this.delete = new Button(this.width / 2 - 104, this.height / 2, 40, 20, new TranslationTextComponent("Delete"), (deletePress) -> {
+            nbt.getList("waypoints", Constants.NBT.TAG_COMPOUND);
+            NetworkHandler.INSTANCE.sendToServer(new PacketDeleteWaypoint(selected - 1));
+            Minecraft.getInstance().setScreen(null);
+            PlayerHelper.closeVMModel(this.minecraft.player);
         });
-        this.add = new Button(this.width / 2 + 85, this.height / 2, 20, 20, new TranslationTextComponent("+"), (onPress) -> {
+        this.add = new Button(this.width / 2 + 85, this.height / 2, 20, 20, new TranslationTextComponent("+"), (addPress) -> {
             Minecraft.getInstance().setScreen(new VMWaypointSave());
         });
 
@@ -119,10 +86,24 @@ public class VMWaypoint extends VortexMFunctionScreen {
     }
 
     @Override
+    public void tick() {
+        if (nbt != null) {
+            if (nbt.getList("waypoints", Constants.NBT.TAG_COMPOUND) != null) {
+                option = nbt.getList("waypoints", Constants.NBT.TAG_COMPOUND).getCompound(selected - 1).getString("name");
+                maxSelected = nbt.getList("waypoints", Constants.NBT.TAG_COMPOUND).toArray().length;
+                x = nbt.getList("waypoints", Constants.NBT.TAG_COMPOUND).getCompound(selected - 1).getInt("x");
+                y = nbt.getList("waypoints", Constants.NBT.TAG_COMPOUND).getCompound(selected - 1).getInt("y");
+                z = nbt.getList("waypoints", Constants.NBT.TAG_COMPOUND).getCompound(selected - 1).getInt("z");
+                dim = nbt.getList("waypoints", Constants.NBT.TAG_COMPOUND).getCompound(selected - 1).getString("dim");
+            }
+        }
+    }
+
+    @Override
     public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         super.render(matrixStack, mouseX, mouseY, partialTicks);
         drawCenteredString(matrixStack, this.font, this.title.getString(), this.width / 2, this.height / 2 - 13, 16777215);
-        drawCenteredString(matrixStack, this.font, option, this.width / 2 - 10, 125, 16777215);
+        drawCenteredString(matrixStack, this.font, option, this.width / 2 - 10, this.height / 2 + 7, 16777215);
     }
 
 
