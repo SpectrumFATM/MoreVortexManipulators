@@ -16,6 +16,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import net.tardis.mod.client.guis.vm.VortexMFunctionScreen;
+import net.tardis.mod.helper.PlayerHelper;
 import net.tardis.mod.items.TItems;
 
 import java.util.ArrayList;
@@ -103,6 +104,7 @@ public class VMWaypoint extends VortexMFunctionScreen {
             if (nbt.getList("waypoints", Constants.NBT.TAG_COMPOUND) != null) {
                 NetworkHandler.INSTANCE.sendToServer(new PacketDeleteWaypoint(selected - 1));
                 Minecraft.getInstance().setScreen(null);
+                PlayerHelper.closeVMModel(this.minecraft.player);
             }
         });
         this.add = new Button(this.width / 2 + 85, this.height / 2, 20, 20, new TranslationTextComponent("+"), (onPress) -> {

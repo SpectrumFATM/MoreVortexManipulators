@@ -8,6 +8,7 @@ import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.tardis.mod.client.guis.vm.VortexMFunctionScreen;
+import net.tardis.mod.helper.PlayerHelper;
 
 public class VMWaypointSave extends VortexMFunctionScreen {
 
@@ -34,6 +35,7 @@ public class VMWaypointSave extends VortexMFunctionScreen {
         this.save = new Button(this.width / 2 - 75, this.height / 2 + 35, 150, 20, new TranslationTextComponent("Save"), (p_onPress_1_) -> {
             NetworkHandler.INSTANCE.sendToServer(new PacketSaveWaypoint(this.minecraft.player.level.dimension().location().toString(), this.name.getValue()));
             Minecraft.getInstance().setScreen(null);
+            PlayerHelper.closeVMModel(this.minecraft.player);
         });
         this.addButton(save);
         this.children.add(this.name);

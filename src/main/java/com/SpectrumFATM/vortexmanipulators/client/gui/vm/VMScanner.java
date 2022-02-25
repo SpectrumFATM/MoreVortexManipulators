@@ -12,6 +12,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.tardis.mod.client.guis.vm.VortexMFunctionScreen;
+import net.tardis.mod.helper.PlayerHelper;
 
 @OnlyIn(Dist.CLIENT)
 public class VMScanner extends VortexMFunctionScreen {
@@ -32,6 +33,7 @@ public class VMScanner extends VortexMFunctionScreen {
         this.scanButton = new Button(this.width / 2 - 75, this.height / 2 + 13, 150, 20, this.scan, (onScanPress) -> {
             NetworkHandler.INSTANCE.sendToServer(new PacketBioScan(this.userInput.getValue()));
             Minecraft.getInstance().setScreen(null);
+            PlayerHelper.closeVMModel(this.minecraft.player);
         });
         this.addButton(scanButton);
     }
