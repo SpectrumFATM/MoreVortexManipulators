@@ -14,6 +14,7 @@ import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.tardis.mod.vm.AbstractVortexMFunction;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,15 +24,13 @@ import org.apache.logging.log4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod("vortexmanipulators")
-public class VortexM
-{
+public class VortexM {
     // Directly reference a log4j logger.
     public static final Logger LOGGER = LogManager.getLogger();
     public static final String MODID = "vortexmanipulators";
 
     public VortexM() {
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
-        VortexFunctions.FUNCTIONS.register(modBus);
         // Register the setup method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         // Register the enqueueIMC method for modloading
@@ -43,29 +42,21 @@ public class VortexM
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
+        VortexFunctions.FUNCTIONS.register(modBus);
     }
 
-    private void setup(final FMLCommonSetupEvent event)
-    {
+    private void setup(final FMLCommonSetupEvent event) {
+        VortexFunctions.addFunctionToCategories();
         NetworkHandler.registerMessages();
-        VortexFunctions.addToCatagories();
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
     }
 
-    private void enqueueIMC(final InterModEnqueueEvent event)
-    {
+    private void enqueueIMC(final InterModEnqueueEvent event) {
     }
 
-    private void processIMC(final InterModProcessEvent event)
-    {
-    }
-    // You can use SubscribeEvent and let the Event Bus discover methods to call
-    @SubscribeEvent
-    public void onServerStarting(FMLServerStartingEvent event) {
-        // do something when the server starts
-        LOGGER.info("Server starting!");
+    private void processIMC(final InterModProcessEvent event) {
     }
 
     // You can use EventBusSubscriber to automatically subscribe events on the contained class (this is subscribing to the MOD

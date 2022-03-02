@@ -14,7 +14,10 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.Constants;
+import net.tardis.mod.client.ClientHelper;
 import net.tardis.mod.client.guis.vm.VortexMFunctionScreen;
 import net.tardis.mod.helper.PlayerHelper;
 import net.tardis.mod.items.TItems;
@@ -22,6 +25,7 @@ import net.tardis.mod.items.TItems;
 import java.util.ArrayList;
 import java.util.List;
 
+@OnlyIn(Dist.CLIENT)
 public class VMWaypoint extends VortexMFunctionScreen {
 
     private final TranslationTextComponent title = new TranslationTextComponent("gui.vm.waypoints.title");
@@ -71,11 +75,11 @@ public class VMWaypoint extends VortexMFunctionScreen {
         this.delete = new Button(this.width / 2 - 104, this.height / 2, 40, 20, new TranslationTextComponent("Delete"), (deletePress) -> {
             nbt.getList("waypoints", Constants.NBT.TAG_COMPOUND);
             NetworkHandler.INSTANCE.sendToServer(new PacketDeleteWaypoint(selected - 1));
-            Minecraft.getInstance().setScreen(null);
+            ClientHelper.openGui(null);
             PlayerHelper.closeVMModel(this.minecraft.player);
         });
         this.add = new Button(this.width / 2 + 85, this.height / 2, 20, 20, new TranslationTextComponent("+"), (addPress) -> {
-            Minecraft.getInstance().setScreen(new VMWaypointSave());
+            ClientHelper.openGui(new VMWaypointSave());
         });
 
         this.addButton(delete);

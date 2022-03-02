@@ -3,7 +3,7 @@ loaderVersion="[36,)" #mandatory This is typically bumped every Minecraft versio
 license="All rights reserved"
 [[mods]] #mandatory
 modId="vortexmanipulators" #mandatory
-version="0.1A" #mandatory
+version="0.1B" #mandatory
 displayName="Vortex Manipulators" #mandatory
 #logoFile="vortexmanipulators.png" #optional
 credits="The New TARDIS Mod Team" #optional
@@ -30,6 +30,6 @@ Please note all relevant rights belong to the BBC and associated parties.
 [[dependencies.vortexmanipulators]]
     modId="tardis"
     mandatory=true
-    versionRange="[1.5.3,)"
+    versionRange="[1.5.4,)"
     ordering="AFTER"
     side="BOTH"

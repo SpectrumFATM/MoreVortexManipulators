@@ -7,9 +7,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.tardis.mod.client.guis.vm.VortexMFunctionScreen;
 import net.tardis.mod.helper.PlayerHelper;
 
+@OnlyIn(Dist.CLIENT)
 public class VMWaypointSave extends VortexMFunctionScreen {
 
     private final TranslationTextComponent title = new TranslationTextComponent("gui.vm.waypointsave.title");

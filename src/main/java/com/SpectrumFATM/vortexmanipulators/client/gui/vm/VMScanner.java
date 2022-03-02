@@ -33,7 +33,6 @@ public class VMScanner extends VortexMFunctionScreen {
         this.scanButton = new Button(this.width / 2 - 75, this.height / 2 + 13, 150, 20, this.scan, (onScanPress) -> {
             NetworkHandler.INSTANCE.sendToServer(new PacketBioScan(this.userInput.getValue()));
             Minecraft.getInstance().setScreen(null);
-            PlayerHelper.closeVMModel(this.minecraft.player);
         });
         this.addButton(scanButton);
     }
