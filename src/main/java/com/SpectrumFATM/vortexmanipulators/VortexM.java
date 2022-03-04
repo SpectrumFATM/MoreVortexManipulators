@@ -2,8 +2,11 @@ package com.SpectrumFATM.vortexmanipulators;
 
 import com.SpectrumFATM.vortexmanipulators.registries.NetworkHandler;
 import com.SpectrumFATM.vortexmanipulators.registries.VortexFunctions;
+import net.minecraft.block.Block;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -34,5 +37,9 @@ public class VortexM {
     private void setup(final FMLCommonSetupEvent event) {
         VortexFunctions.addFunctionToCategories();
         NetworkHandler.registerMessages();
+    }
+
+    @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
+    public static class RegistryEvents {
     }
 }
