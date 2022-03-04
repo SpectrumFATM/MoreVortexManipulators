@@ -44,7 +44,7 @@ public class PacketTeleportHandler {
         CompoundNBT nbt = stack.getTag();
 
         List list = nbt.getList("waypoints", Constants.NBT.TAG_COMPOUND);
-        SpaceTimeCoord spaceTimeCoord = SpaceTimeCoord.deserialize((CompoundNBT) list.get(index));
+        SpaceTimeCoord spaceTimeCoord = SpaceTimeCoord.deserialize((CompoundNBT) list.get(index - 1));
 
         TPacketHandler.handleVortexMTeleport(sender, spaceTimeCoord.getPos(), spaceTimeCoord.getDim(), true, true);
     }
