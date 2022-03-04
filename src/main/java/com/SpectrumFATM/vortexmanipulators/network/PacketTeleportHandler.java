@@ -1,61 +1,51 @@
 package com.SpectrumFATM.vortexmanipulators.network;
 
-import com.SpectrumFATM.vortexmanipulators.VortexM;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.network.NetworkEvent;
+import net.tardis.mod.items.TItems;
+import net.tardis.mod.misc.SpaceTimeCoord;
 import net.tardis.mod.network.TPacketHandler;
 
-import java.util.Set;
+import java.util.List;
 import java.util.function.Supplier;
 
-public class PacketTeleportHandler {
-    private String dim;
-    private int x;
-    private int y;
-    private int z;
 
-    private RegistryKey<World> world;
+//Change this to take the gui index value and read player item NBT.
+public class PacketTeleportHandler {
+
+    private int index;
 
     public PacketTeleportHandler(PacketBuffer buf) {
-        this.dim = buf.readUtf();
-        this.x = buf.readInt();
-        this.y = buf.readInt();
-        this.z = buf.readInt();
+        this.index = buf.readInt();
     }
 
-    public PacketTeleportHandler(String dim, int x, int y, int z) {
-        this.dim = dim;
-        this.x = x;
-        this.y = y;
-        this.z = z;
+    public PacketTeleportHandler(int index) {
+        this.index = index;
     }
 
     public void toBytes(PacketBuffer buf) {
-        buf.writeUtf(this.dim);
-        buf.writeInt(this.x);
-        buf.writeInt(this.y);
-        buf.writeInt(this.z);
+        buf.writeInt(this.index);
     }
 
     public void handle(Supplier<NetworkEvent.Context> ctx) {
         ServerPlayerEntity sender = ctx.get().getSender();
+        ItemStack stack = null;
 
-        VortexM.LOGGER.info("Attempting to teleport " + sender.getDisplayName().getString() + " to " + dim + " " + x + " " + y + " " + z);
-
-        Set<RegistryKey<World>> worlds = sender.getServer().levelKeys();
-        BlockPos tpPos = new BlockPos(x, y, z);
-        RegistryKey<World> selectedWorld;
-
-        for(RegistryKey<World> world: worlds) {
-            if (world.location().toString().equals(dim)) {
-                selectedWorld = world;
-                TPacketHandler.handleVortexMTeleport(sender, tpPos, selectedWorld, false, true);
-                break;
-            }
+        if (sender.getMainHandItem().getItem() == TItems.VORTEX_MANIP.get()){
+            stack = sender.getMainHandItem();
+        } else if (sender.getOffhandItem().getItem() == TItems.VORTEX_MANIP.get()){
+            stack = ctx.get().getSender().getOffhandItem();
         }
+
+        CompoundNBT nbt = stack.getTag();
+
+        List list = nbt.getList("waypoints", Constants.NBT.TAG_COMPOUND);
+        SpaceTimeCoord spaceTimeCoord = SpaceTimeCoord.deserialize((CompoundNBT) list.get(index));
+
+        TPacketHandler.handleVortexMTeleport(sender, spaceTimeCoord.getPos(), spaceTimeCoord.getDim(), true, true);
     }
 }

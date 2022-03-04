@@ -5,7 +5,6 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.fml.network.NetworkEvent;
 
-import java.util.List;
 import java.util.function.Supplier;
 
 public class PacketBioScan {

@@ -1,13 +1,10 @@
 package com.SpectrumFATM.vortexmanipulators.client.gui.vm;
 
-import com.SpectrumFATM.vortexmanipulators.VortexM;
 import com.SpectrumFATM.vortexmanipulators.network.PacketDeleteWaypoint;
 import com.SpectrumFATM.vortexmanipulators.network.PacketTeleportHandler;
 import com.SpectrumFATM.vortexmanipulators.registries.NetworkHandler;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -39,7 +36,6 @@ public class VMWaypoint extends VortexMFunctionScreen {
     private int selected = 1;
     private int maxSelected;
     private String option = "";
-    private ClientPlayerEntity playerEntity = Minecraft.getInstance().player;
     private CompoundNBT nbt;
     private List<RegistryKey<World>> worldKeys = new ArrayList();
     private ItemStack mainStack = Minecraft.getInstance().player.getMainHandItem();
@@ -70,7 +66,7 @@ public class VMWaypoint extends VortexMFunctionScreen {
         });
 
         this.enter = new Button(this.width / 2 + 43, this.height / 2, 40, 20, new TranslationTextComponent("Enter"), (enterPress) -> {
-            NetworkHandler.INSTANCE.sendToServer(new PacketTeleportHandler(dim, x, y, z));
+            NetworkHandler.INSTANCE.sendToServer(new PacketTeleportHandler(selected));
         });
         this.delete = new Button(this.width / 2 - 104, this.height / 2, 40, 20, new TranslationTextComponent("Delete"), (deletePress) -> {
             nbt.getList("waypoints", Constants.NBT.TAG_COMPOUND);
@@ -95,10 +91,7 @@ public class VMWaypoint extends VortexMFunctionScreen {
             if (nbt.getList("waypoints", Constants.NBT.TAG_COMPOUND) != null) {
                 option = nbt.getList("waypoints", Constants.NBT.TAG_COMPOUND).getCompound(selected - 1).getString("name");
                 maxSelected = nbt.getList("waypoints", Constants.NBT.TAG_COMPOUND).toArray().length;
-                x = nbt.getList("waypoints", Constants.NBT.TAG_COMPOUND).getCompound(selected - 1).getInt("x");
-                y = nbt.getList("waypoints", Constants.NBT.TAG_COMPOUND).getCompound(selected - 1).getInt("y");
-                z = nbt.getList("waypoints", Constants.NBT.TAG_COMPOUND).getCompound(selected - 1).getInt("z");
-                dim = nbt.getList("waypoints", Constants.NBT.TAG_COMPOUND).getCompound(selected - 1).getString("dim");
+
             }
         }
     }

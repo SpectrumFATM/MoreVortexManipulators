@@ -4,6 +4,7 @@ import com.SpectrumFATM.vortexmanipulators.network.PacketSaveWaypoint;
 import com.SpectrumFATM.vortexmanipulators.registries.NetworkHandler;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -11,6 +12,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.tardis.mod.client.guis.vm.VortexMFunctionScreen;
 import net.tardis.mod.helper.PlayerHelper;
+import net.tardis.mod.misc.SpaceTimeCoord;
 
 @OnlyIn(Dist.CLIENT)
 public class VMWaypointSave extends VortexMFunctionScreen {
@@ -29,6 +31,7 @@ public class VMWaypointSave extends VortexMFunctionScreen {
     @Override
     public void init() {
         super.init();
+        ClientPlayerEntity playerEntity = Minecraft.getInstance().player;;
         this.dimText = "Dimension: " + this.minecraft.player.level.dimension().location();
         this.xPos = "X: " + (int)this.minecraft.player.getX();
         this.zPos = "Y: " + (int)this.minecraft.player.getY();
@@ -36,7 +39,9 @@ public class VMWaypointSave extends VortexMFunctionScreen {
         this.name = new TextFieldWidget(this.font, this.width / 2 - 75, this.height / 2 + 10, 150, 20, new TranslationTextComponent(""));
         this.name.setFocus(true);
         this.save = new Button(this.width / 2 - 75, this.height / 2 + 35, 150, 20, new TranslationTextComponent("Save"), (p_onPress_1_) -> {
-            NetworkHandler.INSTANCE.sendToServer(new PacketSaveWaypoint(this.minecraft.player.level.dimension().location().toString(), this.name.getValue()));
+            SpaceTimeCoord currentPos = new SpaceTimeCoord(playerEntity.level.dimension(), playerEntity.blockPosition(), playerEntity.getDirection());
+            currentPos.setName(this.name.getValue());
+            NetworkHandler.INSTANCE.sendToServer(new PacketSaveWaypoint(currentPos.serialize()));
             Minecraft.getInstance().setScreen(null);
             PlayerHelper.closeVMModel(this.minecraft.player);
         });
