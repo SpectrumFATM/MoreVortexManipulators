@@ -13,8 +13,6 @@ import net.tardis.mod.network.TPacketHandler;
 import java.util.List;
 import java.util.function.Supplier;
 
-
-//Change this to take the gui index value and read player item NBT.
 public class PacketTeleportHandler {
 
     private int index;

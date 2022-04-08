@@ -3,6 +3,7 @@ package com.SpectrumFATM.vortexmanipulators.registries;
 import java.util.function.Supplier;
 
 import com.SpectrumFATM.vortexmanipulators.VortexM;
+import com.SpectrumFATM.vortexmanipulators.vm.VortexMRandom;
 import com.SpectrumFATM.vortexmanipulators.vm.VortexMScanner;
 import com.SpectrumFATM.vortexmanipulators.vm.VortexMWaypoint;
 import net.minecraftforge.fml.RegistryObject;
@@ -19,6 +20,7 @@ public class VortexFunctions {
     public static Supplier<IForgeRegistry<AbstractVortexMFunction>> FUNCTIONS_REGISTRY;
     public static final RegistryObject<AbstractVortexMFunction> BIO_SCANNER;
     public static final RegistryObject<AbstractVortexMFunction> WAYPOINTS;
+    public static final RegistryObject<AbstractVortexMFunction> RANDOMISER;
 
     public VortexFunctions() {
     }
@@ -26,6 +28,7 @@ public class VortexFunctions {
     public static void addFunctionToCategories() {
         ((VortexMFunctionCategory) VortexMFunctionCategories.DIAGNOSTIC.get()).appendFunctionToList((AbstractVortexMFunction)BIO_SCANNER.get());
         ((VortexMFunctionCategory)VortexMFunctionCategories.TELEPORT.get()).appendFunctionToList((AbstractVortexMFunction)WAYPOINTS.get());
+        ((VortexMFunctionCategory)VortexMFunctionCategories.TELEPORT.get()).appendFunctionToList((AbstractVortexMFunction)RANDOMISER.get());
     }
 
     static {
@@ -36,6 +39,8 @@ public class VortexFunctions {
         WAYPOINTS = FUNCTIONS.register("waypoints", () -> {
             return new VortexMWaypoint();
         });
-
+        RANDOMISER = FUNCTIONS.register("randomiser", () -> {
+            return new VortexMRandom();
+        });
     }
 }

@@ -6,5 +6,6 @@
   "gui.vm.waypointsave.title": "New Waypoint",
   "gui.vm.waypoints.title": "Select a Waypoint",
   "function.vm.vortexmanipulators.bioscanner": "Bio-Scanner",
-  "function.vm.vortexmanipulators.waypoints": "Waypoints"
+  "function.vm.vortexmanipulators.waypoints": "Waypoints",
+  "function.vm.vortexmanipulators.randomiser": "Randomiser"
 }
