@@ -5,7 +5,9 @@
   "gui.vm.bioscanner.instruct": "(Scan a nearby player)",
   "gui.vm.waypointsave.title": "New Waypoint",
   "gui.vm.waypoints.title": "Select a Waypoint",
+  "gui.vm.locator.title": "Select a Structure",
   "function.vm.vortexmanipulators.bioscanner": "Bio-Scanner",
   "function.vm.vortexmanipulators.waypoints": "Waypoints",
-  "function.vm.vortexmanipulators.randomiser": "Randomiser"
+  "function.vm.vortexmanipulators.randomiser": "Randomiser",
+  "function.vm.vortexmanipulators.locator": "Locator"
 }
