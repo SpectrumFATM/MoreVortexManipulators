@@ -19,19 +19,19 @@ public class VortexMRandom extends BaseVortexMFunction {
     @Override
     public void sendActionOnServer(World world, ServerPlayerEntity player) {
         super.sendActionOnClient(world, player);
-        int positive = random.nextInt(1);
+        int positive = random.nextInt(2);
         double x;
-        double y;
+        double z;
 
         if (positive == 1) {
            x = player.getX() + random.nextInt(100);
-           y = player.getY() + random.nextInt(100);
+           z = player.getZ() + random.nextInt(100);
         } else {
             x = player.getX() - random.nextInt(100);
-            y = player.getY() - random.nextInt(100);
+            z = player.getZ() - random.nextInt(100);
         }
 
-        TPacketHandler.handleVortexMTeleport(player, new BlockPos(x, 64, y), false);
+        TPacketHandler.handleVortexMTeleport(player, new BlockPos(x, 64, z), false);
         PlayerHelper.closeVMModel(player);
     }
 }
