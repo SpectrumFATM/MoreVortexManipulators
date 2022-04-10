@@ -17,7 +17,5 @@ public class BlockRegistry {
         BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 
-    public static final RegistryObject<Block> TIME_DESTRUCTOR = BLOCKS.register("temporal_eraser", () -> new TemporalEraser(AbstractBlock.Properties.of(Material.METAL).noOcclusion().lightLevel((value) -> {
-        return 3;
-    })));
+    public static final RegistryObject<Block> TIME_DESTRUCTOR = BLOCKS.register("temporal_eraser", () -> new TemporalEraser(AbstractBlock.Properties.of(Material.METAL).dynamicShape()));
 }

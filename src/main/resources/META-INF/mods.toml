@@ -4,7 +4,7 @@ license="All rights reserved"
 [[mods]] #mandatory
 modId="vortexmanipulators" #mandatory
 version="0.1D" #mandatory
-displayName="Vortex Manipulators" #mandatory
+displayName="More Vortex Manipulators" #mandatory
 #logoFile="vortexmanipulators.png" #optional
 credits="The New TARDIS Mod Team" #optional
 authors="SpectrumFATM" #optional
