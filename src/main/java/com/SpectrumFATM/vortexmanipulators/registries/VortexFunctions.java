@@ -1,7 +1,5 @@
 package com.SpectrumFATM.vortexmanipulators.registries;
 
-import java.util.function.Supplier;
-
 import com.SpectrumFATM.vortexmanipulators.VortexM;
 import com.SpectrumFATM.vortexmanipulators.vm.VortexMLocator;
 import com.SpectrumFATM.vortexmanipulators.vm.VortexMRandom;
@@ -12,9 +10,9 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.tardis.mod.registries.VortexMFunctionCategories;
 import net.tardis.mod.vm.AbstractVortexMFunction;
-import net.tardis.mod.vm.DistressFunction;
-import net.tardis.mod.vm.TeleportFunction;
 import net.tardis.mod.vm.VortexMFunctionCategory;
+
+import java.util.function.Supplier;
 
 public class VortexFunctions {
     public static final DeferredRegister<AbstractVortexMFunction> FUNCTIONS = DeferredRegister.create(AbstractVortexMFunction.class, VortexM.MODID);

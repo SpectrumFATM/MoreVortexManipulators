@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "idi",
+    "xbx",
+    "ifi"
+  ],
+  "key": {
+    "i": {
+      "item": "minecraft:iron_ingot"
+    },
+    "d": {
+      "item": "tardis:subsystem/dematerialisation_circuit"
+    },
+    "b": {
+      "item": "tardis:artron_battery"
+    },
+    "x": {
+      "item": "tardis:xion_crystal"
+    },
+    "f": {
+      "item": "tardis:subsystem/fluid_link"
+    }
+  },
+  "result": {
+    "item": "vortexmanipulators:temporal_eraser",
+    "count": 1
+  }
+}
