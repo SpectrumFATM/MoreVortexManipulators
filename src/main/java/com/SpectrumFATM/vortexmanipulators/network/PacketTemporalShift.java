@@ -1,5 +1,6 @@
 package com.SpectrumFATM.vortexmanipulators.network;
 
+import com.SpectrumFATM.vortexmanipulators.VortexM;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
@@ -8,6 +9,7 @@ import net.minecraft.util.RegistryKey;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.NetworkEvent;
 import net.tardis.mod.cap.Capabilities;
 import net.tardis.mod.helper.LandingSystem;
@@ -82,14 +84,21 @@ public class PacketTemporalShift {
     }
 
     public RegistryKey<World> getRandomWorldKey(ServerPlayerEntity sender) {
-        List<RegistryKey<World>> worlds = new ArrayList<>(sender.getServer().levelKeys());
+        Iterable<ServerWorld> serverWorld = sender.getServer().getAllLevels();
+        List<ServerWorld> worlds = new ArrayList<>();
+
+        serverWorld.forEach((world) -> {
+            if (WorldHelper.getAllValidDimensions().contains(world)) {
+                worlds.add(world);
+            }
+        });
 
         int randomIndex = random.nextInt(worlds.size() - 1);
 
-        while (worlds.get(randomIndex).location().toString().equals("minecraft:the_end") || worlds.get(randomIndex).location().toString().equals("minecraft:the_nether")) {
+        while (worlds.get(randomIndex).dimension().location().toString().equals("minecraft:the_end") || worlds.get(randomIndex).dimension().location().toString().equals("minecraft:the_nether")) {
             randomIndex = random.nextInt(worlds.size() - 1);
         }
 
-        return worlds.get(randomIndex);
+        return WorldHelper.getWorldKeyFromRL(worlds.get(randomIndex).dimension().location());
     }
 }
