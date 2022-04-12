@@ -2,6 +2,7 @@ package com.SpectrumFATM.vortexmanipulators.registries;
 
 import com.SpectrumFATM.vortexmanipulators.VortexM;
 import com.SpectrumFATM.vortexmanipulators.items.TemporalEraser;
+import com.SpectrumFATM.vortexmanipulators.items.TemporalShift;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -16,5 +17,6 @@ public class ItemRegistry {
         ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 
-    public static final RegistryObject<Item> TIME_DESTRUCTOR = ITEMS.register("temporal_eraser", () -> new TemporalEraser(BlockRegistry.TIME_DESTRUCTOR.get(), new Item.Properties().stacksTo(1).tab(TItemGroups.MAIN)));
+    public static final RegistryObject<Item> TEMPORAL_ERASER = ITEMS.register("temporal_eraser", () -> new TemporalEraser(BlockRegistry.TIME_DESTRUCTOR.get(), new Item.Properties().stacksTo(1).tab(TItemGroups.MAIN)));
+    public static final RegistryObject<Item> TEMPORAL_SHIFT = ITEMS.register("temporal_shift", () -> new TemporalShift(new Item.Properties().stacksTo(1).tab(TItemGroups.MAIN)));
 }

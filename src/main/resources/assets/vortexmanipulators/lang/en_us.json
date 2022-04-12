@@ -10,5 +10,6 @@
   "function.vm.vortexmanipulators.waypoints": "Waypoints",
   "function.vm.vortexmanipulators.randomiser": "Randomiser",
   "function.vm.vortexmanipulators.locator": "Locator",
-  "block.vortexmanipulators.temporal_eraser": "Temporal Eraser"
+  "block.vortexmanipulators.temporal_eraser": "Temporal Eraser",
+  "item.vortexmanipulators.temporal_shift": "Emergency Temporal Shift"
 }

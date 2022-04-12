@@ -55,6 +55,12 @@ public class NetworkHandler {
                 PacketTemporalDisplacement::toBytes,
                 PacketTemporalDisplacement::new,
                 PacketTemporalDisplacement::handle);
+
+        INSTANCE.registerMessage(nextID(),
+                PacketTemporalShift.class,
+                PacketTemporalShift::toBytes,
+                PacketTemporalShift::new,
+                PacketTemporalShift::handle);
     }
 }
  

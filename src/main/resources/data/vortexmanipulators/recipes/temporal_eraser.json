@@ -13,7 +13,7 @@
       "item": "tardis:subsystem/dematerialisation_circuit"
     },
     "b": {
-      "item": "tardis:artron_battery"
+      "item": "tardis:artron_battery_high"
     },
     "x": {
       "item": "tardis:xion_crystal"
