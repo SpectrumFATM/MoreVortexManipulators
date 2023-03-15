@@ -4,11 +4,17 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.concurrent.TickDelayedTask;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.network.NetworkEvent;
+import net.tardis.mod.cap.Capabilities;
+import net.tardis.mod.helper.LandingSystem;
+import net.tardis.mod.helper.WorldHelper;
 import net.tardis.mod.items.TItems;
 import net.tardis.mod.misc.SpaceTimeCoord;
 import net.tardis.mod.network.TPacketHandler;
+import net.tardis.mod.world.dimensions.TDimensions;
 
 import java.util.List;
 import java.util.function.Supplier;
@@ -44,6 +50,12 @@ public class PacketTeleportHandler {
         List list = nbt.getList("waypoints", Constants.NBT.TAG_COMPOUND);
         SpaceTimeCoord spaceTimeCoord = SpaceTimeCoord.deserialize((CompoundNBT) list.get(index - 1));
 
-        TPacketHandler.handleVortexMTeleport(sender, spaceTimeCoord.getPos(), spaceTimeCoord.getDim(), true, true);
+        //TPacketHandler.handleVortexMTeleport(sender, spaceTimeCoord.getPos(), spaceTimeCoord.getDim(), true, true);
+        sender.getCapability(Capabilities.PLAYER_DATA).ifPresent((playerCap) -> {
+            playerCap.setDestination(new SpaceTimeCoord(spaceTimeCoord.getDim(), spaceTimeCoord.getPos()));
+            playerCap.calcDisplacement(sender.blockPosition(), spaceTimeCoord.getPos());
+        });
+
+        WorldHelper.teleportEntities(sender, sender.level.getServer().getLevel(TDimensions.VORTEX_DIM), new BlockPos(0, 500D, 0), 0, 90);
     }
 }

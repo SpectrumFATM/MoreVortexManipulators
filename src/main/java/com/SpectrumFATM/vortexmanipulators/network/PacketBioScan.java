@@ -32,6 +32,7 @@ public class PacketBioScan {
             sender.displayClientMessage(new TranslationTextComponent("Health: " + selected.getHealth() + "/" + selected.getMaxHealth()), false);
             sender.displayClientMessage(new TranslationTextComponent("Hunger: " + selected.getFoodData().getFoodLevel() + "/20"), false);
             sender.displayClientMessage(new TranslationTextComponent("Coords: " + (int) selected.getX() + " " + (int) selected.getY() + " " + (int) selected.getZ()), false);
+            sender.displayClientMessage(new TranslationTextComponent("Dimension: " + selected.level.dimension().location()), false);
         }
     }
 }
