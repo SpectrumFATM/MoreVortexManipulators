@@ -61,6 +61,12 @@ public class NetworkHandler {
                 PacketTemporalShift::toBytes,
                 PacketTemporalShift::new,
                 PacketTemporalShift::handle);
+
+        INSTANCE.registerMessage(nextID(),
+                PacketShareWaypoint.class,
+                PacketShareWaypoint::toBytes,
+                PacketShareWaypoint::new,
+                PacketShareWaypoint::handle);
     }
 }
  

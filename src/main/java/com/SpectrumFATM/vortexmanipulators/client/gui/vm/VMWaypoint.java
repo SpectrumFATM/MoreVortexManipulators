@@ -1,6 +1,8 @@
 package com.SpectrumFATM.vortexmanipulators.client.gui.vm;
 
+import com.SpectrumFATM.vortexmanipulators.VortexM;
 import com.SpectrumFATM.vortexmanipulators.network.PacketDeleteWaypoint;
+import com.SpectrumFATM.vortexmanipulators.network.PacketShareWaypoint;
 import com.SpectrumFATM.vortexmanipulators.network.PacketTeleportHandler;
 import com.SpectrumFATM.vortexmanipulators.registries.NetworkHandler;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -28,6 +30,7 @@ public class VMWaypoint extends VortexMFunctionScreen {
     private final TranslationTextComponent title = new TranslationTextComponent("gui.vm.waypoints.title");
 
     private Button delete;
+    private Button share;
     private Button left;
     private Button right;
     private Button enter;
@@ -35,7 +38,7 @@ public class VMWaypoint extends VortexMFunctionScreen {
 
     private int selected = 1;
     private int maxSelected;
-    private String option = "";
+    private CompoundNBT option;
     private CompoundNBT nbt;
     private List<RegistryKey<World>> worldKeys = new ArrayList();
     private ItemStack mainStack = Minecraft.getInstance().player.getMainHandItem();
@@ -74,11 +77,18 @@ public class VMWaypoint extends VortexMFunctionScreen {
             ClientHelper.openGui(null);
             PlayerHelper.closeVMModel(this.minecraft.player);
         });
+
+        this.share = new Button(this.width / 2 - 104, this.height / 2 + 23, 100, 20, new TranslationTextComponent("Send to TARDIS"), (sharePress) -> {
+            NetworkHandler.INSTANCE.sendToServer(new PacketShareWaypoint(this.minecraft.player.getCommandSenderWorld().dimension().location(), option.getLong("pos"), option.getString("dim")));
+            Minecraft.getInstance().setScreen(null);
+        });
+
         this.add = new Button(this.width / 2 + 85, this.height / 2, 20, 20, new TranslationTextComponent("+"), (addPress) -> {
             ClientHelper.openGui(new VMWaypointSave());
         });
 
         this.addButton(delete);
+        this.addButton(share);
         this.addButton(left);
         this.addButton(right);
         this.addButton(enter);
@@ -89,9 +99,8 @@ public class VMWaypoint extends VortexMFunctionScreen {
     public void tick() {
         if (nbt != null) {
             if (nbt.getList("waypoints", Constants.NBT.TAG_COMPOUND) != null) {
-                option = nbt.getList("waypoints", Constants.NBT.TAG_COMPOUND).getCompound(selected - 1).getString("name");
+                option = nbt.getList("waypoints", Constants.NBT.TAG_COMPOUND).getCompound(selected - 1);
                 maxSelected = nbt.getList("waypoints", Constants.NBT.TAG_COMPOUND).toArray().length;
-
             }
         }
     }
@@ -100,8 +109,11 @@ public class VMWaypoint extends VortexMFunctionScreen {
     public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         super.render(matrixStack, mouseX, mouseY, partialTicks);
         drawCenteredString(matrixStack, this.font, this.title.getString(), this.width / 2, this.height / 2 - 13, 16777215);
-        drawCenteredString(matrixStack, this.font, option, this.width / 2 - 10, this.height / 2 + 7, 16777215);
-    }
+        if (option != null) {
+            drawCenteredString(matrixStack, this.font, option.getString("name"), this.width / 2 - 10, this.height / 2 + 7, 16777215);
+        } else {
+            VortexM.LOGGER.error("Option is null!");
+        }    }
 
 
 }

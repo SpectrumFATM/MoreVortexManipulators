@@ -11,5 +11,7 @@
   "function.vm.vortexmanipulators.randomiser": "Randomiser",
   "function.vm.vortexmanipulators.locator": "Locator",
   "block.vortexmanipulators.temporal_eraser": "Temporal Eraser",
-  "item.vortexmanipulators.temporal_shift": "Emergency Temporal Shift"
+  "item.vortexmanipulators.temporal_shift": "Emergency Temporal Shift",
+  "message.vm.locationshared": "Space-time coordinates successfully shared!",
+  "message.vm.impossible": "That action is not possible!"
 }

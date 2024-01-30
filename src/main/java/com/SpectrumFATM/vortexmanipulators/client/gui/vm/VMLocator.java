@@ -1,7 +1,6 @@
 package com.SpectrumFATM.vortexmanipulators.client.gui.vm;
 
 import com.SpectrumFATM.vortexmanipulators.network.PacketLocator;
-import com.SpectrumFATM.vortexmanipulators.network.PacketTeleportHandler;
 import com.SpectrumFATM.vortexmanipulators.registries.NetworkHandler;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
