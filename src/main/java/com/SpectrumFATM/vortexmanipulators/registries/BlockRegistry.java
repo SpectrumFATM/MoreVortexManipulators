@@ -1,6 +1,7 @@
 package com.SpectrumFATM.vortexmanipulators.registries;
 
 import com.SpectrumFATM.vortexmanipulators.VortexM;
+import com.SpectrumFATM.vortexmanipulators.blocks.RiftManipulator;
 import com.SpectrumFATM.vortexmanipulators.blocks.TemporalEraser;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -18,4 +19,5 @@ public class BlockRegistry {
     }
 
     public static final RegistryObject<Block> TIME_DESTRUCTOR = BLOCKS.register("temporal_eraser", () -> new TemporalEraser(AbstractBlock.Properties.of(Material.METAL).dynamicShape()));
+    public static final RegistryObject<Block> RIFT_MANIPULATOR = BLOCKS.register("rift_manipulator", () -> new RiftManipulator(AbstractBlock.Properties.of(Material.METAL).dynamicShape()));
 }

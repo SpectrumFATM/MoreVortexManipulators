@@ -16,7 +16,7 @@ public class MobRegistry {
 
     //Entity Types
     //EntityType.Builder.create is now EntityType.Builder.of
-    public static final RegistryObject<EntityType<TimeFissureEntity>> HOG = ENTITY_TYPES.register("time_fissure",
+    public static final RegistryObject<EntityType<TimeFissureEntity>> FISSURE = ENTITY_TYPES.register("time_fissure",
             () -> EntityType.Builder.of(TimeFissureEntity::new, EntityClassification.MISC)
                     .sized(1.0F, 1.0F)
                     .build(new ResourceLocation(VortexM.MODID, "time_fissure").toString()));

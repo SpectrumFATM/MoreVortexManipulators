@@ -14,6 +14,6 @@ public class ClientEventBusSubscriber {
 
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
-        RenderingRegistry.registerEntityRenderingHandler(MobRegistry.HOG.get(), TimeFissureRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(MobRegistry.FISSURE.get(), TimeFissureRenderer::new);
     }
 }

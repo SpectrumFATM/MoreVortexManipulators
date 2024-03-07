@@ -67,6 +67,24 @@ public class NetworkHandler {
                 PacketShareWaypoint::toBytes,
                 PacketShareWaypoint::new,
                 PacketShareWaypoint::handle);
+
+        INSTANCE.registerMessage(nextID(),
+                PacketTimeFissure.class,
+                PacketTimeFissure::toBytes,
+                PacketTimeFissure::new,
+                PacketTimeFissure::handle);
+
+        INSTANCE.registerMessage(nextID(),
+                PacketRiftManipulator.class,
+                PacketRiftManipulator::toBytes,
+                PacketRiftManipulator::new,
+                PacketRiftManipulator::handle);
+
+        INSTANCE.registerMessage(nextID(),
+                PacketTemporalScan.class,
+                PacketTemporalScan::toBytes,
+                PacketTemporalScan::new,
+                PacketTemporalScan::handle);
     }
 }
  

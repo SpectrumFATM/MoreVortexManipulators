@@ -9,8 +9,10 @@
   "function.vm.vortexmanipulators.bioscanner": "Bio-Scanner",
   "function.vm.vortexmanipulators.waypoints": "Waypoints",
   "function.vm.vortexmanipulators.randomiser": "Randomiser",
+  "function.vm.vortexmanipulators.temporal_scanner": "Temporal Scanner",
   "function.vm.vortexmanipulators.locator": "Locator",
-  "block.vortexmanipulators.temporal_eraser": "Temporal Eraser",
+  "block.vortexmanipulators.temporal_scan": "Temporal Eraser",
+  "block.vortexmanipulators.rift_manipulator": "Rift Manipulator",
   "item.vortexmanipulators.temporal_shift": "Emergency Temporal Shift",
   "message.vm.locationshared": "Space-time coordinates successfully shared!",
   "message.vm.impossible": "That action is not possible!"

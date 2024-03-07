@@ -1,10 +1,7 @@
 package com.SpectrumFATM.vortexmanipulators.registries;
 
 import com.SpectrumFATM.vortexmanipulators.VortexM;
-import com.SpectrumFATM.vortexmanipulators.vm.VortexMLocator;
-import com.SpectrumFATM.vortexmanipulators.vm.VortexMRandom;
-import com.SpectrumFATM.vortexmanipulators.vm.VortexMScanner;
-import com.SpectrumFATM.vortexmanipulators.vm.VortexMWaypoint;
+import com.SpectrumFATM.vortexmanipulators.vm.*;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -21,6 +18,7 @@ public class VortexFunctions {
     public static final RegistryObject<AbstractVortexMFunction> WAYPOINTS;
     public static final RegistryObject<AbstractVortexMFunction> RANDOMISER;
     public static final RegistryObject<AbstractVortexMFunction> LOCATOR;
+    public static final RegistryObject<AbstractVortexMFunction> TEMPORAL_SCAN;
 
     public VortexFunctions() {
     }
@@ -28,6 +26,7 @@ public class VortexFunctions {
     public static void addFunctionToCategories() {
         ((VortexMFunctionCategory) VortexMFunctionCategories.DIAGNOSTIC.get()).appendFunctionToList((AbstractVortexMFunction)BIO_SCANNER.get());
         ((VortexMFunctionCategory) VortexMFunctionCategories.DIAGNOSTIC.get()).appendFunctionToList((AbstractVortexMFunction)LOCATOR.get());
+        ((VortexMFunctionCategory)VortexMFunctionCategories.DIAGNOSTIC.get()).appendFunctionToList((AbstractVortexMFunction)TEMPORAL_SCAN.get());
         ((VortexMFunctionCategory)VortexMFunctionCategories.TELEPORT.get()).appendFunctionToList((AbstractVortexMFunction)WAYPOINTS.get());
         ((VortexMFunctionCategory)VortexMFunctionCategories.TELEPORT.get()).appendFunctionToList((AbstractVortexMFunction)RANDOMISER.get());
     }
@@ -45,6 +44,9 @@ public class VortexFunctions {
         });
         LOCATOR = FUNCTIONS.register("locator", () -> {
             return new VortexMLocator();
+        });
+        TEMPORAL_SCAN = FUNCTIONS.register("temporal_scan", () -> {
+            return new VortexMTemporalScan();
         });
     }
 }
