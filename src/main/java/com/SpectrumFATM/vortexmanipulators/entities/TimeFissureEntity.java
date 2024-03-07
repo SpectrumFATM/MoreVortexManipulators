@@ -87,6 +87,11 @@ public class TimeFissureEntity extends MobEntity implements ICapabilitySerializa
     }
 
     @Override
+    protected void pushEntities() {
+        super true;
+    }
+
+    @Override
     protected void setRot(float p_70101_1_, float p_70101_2_) {
         Random random = new Random();
         int directionX = random.nextInt(360);
