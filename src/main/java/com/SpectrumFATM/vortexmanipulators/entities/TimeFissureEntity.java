@@ -88,7 +88,7 @@ public class TimeFissureEntity extends MobEntity implements ICapabilitySerializa
 
     @Override
     protected void pushEntities() {
-        super true;
+        super.pushEntities();
     }
 
     @Override
