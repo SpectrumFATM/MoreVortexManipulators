@@ -32,6 +32,7 @@ public class VortexM {
     private void setup(final FMLCommonSetupEvent event) {
         DeferredWorkQueue.runLater(() -> {
             GlobalEntityTypeAttributes.put(MobRegistry.FISSURE.get(), TimeFissureEntity.setCustomAttribute().build());
+            GlobalEntityTypeAttributes.put(MobRegistry.GRASKE.get(), TimeFissureEntity.setCustomAttribute().build());
         });
         VortexFunctions.addFunctionToCategories();
         NetworkHandler.registerMessages();

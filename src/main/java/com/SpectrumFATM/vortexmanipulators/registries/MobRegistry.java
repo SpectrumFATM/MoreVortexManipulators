@@ -1,6 +1,7 @@
 package com.SpectrumFATM.vortexmanipulators.registries;
 
 import com.SpectrumFATM.vortexmanipulators.VortexM;
+import com.SpectrumFATM.vortexmanipulators.entities.GraskeEntity;
 import com.SpectrumFATM.vortexmanipulators.entities.TimeFissureEntity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
@@ -18,8 +19,13 @@ public class MobRegistry {
     //EntityType.Builder.create is now EntityType.Builder.of
     public static final RegistryObject<EntityType<TimeFissureEntity>> FISSURE = ENTITY_TYPES.register("time_fissure",
             () -> EntityType.Builder.of(TimeFissureEntity::new, EntityClassification.MISC)
-                    .sized(1.0F, 1.0F)
+                    .sized(0.75F, 2.0F)
                     .build(new ResourceLocation(VortexM.MODID, "time_fissure").toString()));
+
+    public static final RegistryObject<EntityType<GraskeEntity>> GRASKE = ENTITY_TYPES.register("graske",
+            () -> EntityType.Builder.of(GraskeEntity::new, EntityClassification.MONSTER)
+                    .sized(1.0F, 2.0F)
+                    .build(new ResourceLocation(VortexM.MODID, "graske").toString()));
 
     public static void init() {
         MobRegistry.ENTITY_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());

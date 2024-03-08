@@ -14,6 +14,9 @@
   "block.vortexmanipulators.temporal_scan": "Temporal Eraser",
   "block.vortexmanipulators.rift_manipulator": "Rift Manipulator",
   "item.vortexmanipulators.temporal_shift": "Emergency Temporal Shift",
+  "item.vortexmanipulators.time_converter": "Time Converter",
+  "entity.vortexmanipulators.time_fissure": "Time Fissure",
+  "entity.vortexmanipulators.graske": "Graske",
   "message.vm.locationshared": "Space-time coordinates successfully shared!",
   "message.vm.impossible": "That action is not possible!"
 }

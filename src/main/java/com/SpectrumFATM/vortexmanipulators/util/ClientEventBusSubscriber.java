@@ -1,6 +1,7 @@
 package com.SpectrumFATM.vortexmanipulators.util;
 
 import com.SpectrumFATM.vortexmanipulators.VortexM;
+import com.SpectrumFATM.vortexmanipulators.client.renderer.GraskeRenderer;
 import com.SpectrumFATM.vortexmanipulators.client.renderer.TimeFissureRenderer;
 import com.SpectrumFATM.vortexmanipulators.registries.MobRegistry;
 import net.minecraftforge.api.distmarker.Dist;
@@ -15,5 +16,6 @@ public class ClientEventBusSubscriber {
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
         RenderingRegistry.registerEntityRenderingHandler(MobRegistry.FISSURE.get(), TimeFissureRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(MobRegistry.GRASKE.get(), GraskeRenderer::new);
     }
 }

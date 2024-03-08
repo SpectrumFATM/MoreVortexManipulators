@@ -1,9 +1,9 @@
 package com.SpectrumFATM.vortexmanipulators.network;
 
-import com.SpectrumFATM.vortexmanipulators.VortexM;
 import com.SpectrumFATM.vortexmanipulators.entities.TimeFissureEntity;
 import com.SpectrumFATM.vortexmanipulators.registries.MobRegistry;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.SoundCategory;
@@ -14,7 +14,6 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.fml.network.NetworkEvent;
 import net.tardis.mod.cap.Capabilities;
-import net.tardis.mod.helper.LandingSystem;
 import net.tardis.mod.sounds.TSounds;
 
 import java.util.Random;
@@ -74,7 +73,6 @@ public class PacketRiftManipulator {
             if (rift.isRift()) {
                 if (riftEnergy < 963 && riftEnergy > 100 && !isCharging) {
                     this.isCharging = true;
-                    VortexM.LOGGER.info("Rift Manipulator initiated!");
                     //Rift charge potential event.
                     Timer timer = new Timer();
                     TimerTask timerTask = new TimerTask() {
@@ -82,7 +80,6 @@ public class PacketRiftManipulator {
                         public void run() {
                             rift.addEnergy(963 - riftEnergy);
                             isCharging = false;
-                            VortexM.LOGGER.info("Rift Manipulator charged to 963!");
                         }
                     };
 
@@ -113,12 +110,12 @@ public class PacketRiftManipulator {
         Random random = new Random();
 
         if (random.nextInt(2) == 1) {
-            pos = new BlockPos(pos.getX() + random.nextInt(10), pos.getY(), pos.getZ() + random.nextInt(10));
+            pos = new BlockPos(pos.getX() + random.nextInt(50), pos.getY(), pos.getZ() + random.nextInt(50));
         } else {
-            pos = new BlockPos(pos.getX() - random.nextInt(10), pos.getY(), pos.getZ() - random.nextInt(10));
+            pos = new BlockPos(pos.getX() - random.nextInt(50), pos.getY(), pos.getZ() - random.nextInt(50));
         }
 
-        BlockPos spawnPos = LandingSystem.getTopBlock(sender.getLevel(), pos);
+        BlockPos spawnPos = getTopBlock(pos, sender);
 
         return spawnPos;
     }
@@ -131,8 +128,8 @@ public class PacketRiftManipulator {
             int positiveNegativeX = random.nextInt(2);
             int positiveNegativeZ = random.nextInt(2);
 
-            int modifierX = random.nextInt(50);
-            int modifierZ = random.nextInt(50);
+            int modifierX = random.nextInt(100);
+            int modifierZ = random.nextInt(100);
 
 
             if (positiveNegativeX == 1) {
@@ -158,10 +155,23 @@ public class PacketRiftManipulator {
         for (BlockPos position : positions) {
             TimeFissureEntity timeFissure = new TimeFissureEntity(MobRegistry.FISSURE.get(), sender.getLevel());
             sender.getLevel().addFreshEntity(timeFissure);
-            timeFissure.moveTo(position.getX(), generateBlockPos(position, sender).getY(), position.getZ());
+            timeFissure.moveTo(generateBlockPos(position, sender), 0.0F, 0.0F);
         }
 
         sender.getLevel().setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
         sender.getLevel().playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.GENERIC_EXPLODE, SoundCategory.AMBIENT, 1F, 1F, true);
+    }
+
+    private static BlockPos getTopBlock(BlockPos pos, PlayerEntity sender) {
+        BlockPos topBlock = pos;
+
+        for (int i = 255; i > 0; i--) {
+            if (sender.level.getBlockState(new BlockPos(pos.getX(), i, pos.getZ())).getBlock() != Blocks.AIR) {
+                topBlock = new BlockPos(pos.getX(), i + 1, pos.getZ());
+                break;
+            }
+        }
+
+        return topBlock;
     }
 }
