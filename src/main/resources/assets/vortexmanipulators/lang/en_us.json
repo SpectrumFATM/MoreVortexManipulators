@@ -18,5 +18,6 @@
   "entity.vortexmanipulators.time_fissure": "Time Fissure",
   "entity.vortexmanipulators.graske": "Graske",
   "message.vm.locationshared": "Space-time coordinates successfully shared!",
-  "message.vm.impossible": "That action is not possible!"
+  "message.vm.impossible": "That action is not possible!",
+  "vortexmanipulators.time_fissure": "Time fissure crackles with energy",
 }

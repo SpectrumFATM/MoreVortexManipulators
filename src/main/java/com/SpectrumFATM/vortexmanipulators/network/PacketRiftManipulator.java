@@ -2,6 +2,7 @@ package com.SpectrumFATM.vortexmanipulators.network;
 
 import com.SpectrumFATM.vortexmanipulators.entities.TimeFissureEntity;
 import com.SpectrumFATM.vortexmanipulators.registries.MobRegistry;
+import com.SpectrumFATM.vortexmanipulators.registry.SoundRegistry;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -56,7 +57,7 @@ public class PacketRiftManipulator {
                         sender.getLevel().addFreshEntity(timeFissure);
                         timeFissure.moveTo(fissurePos.getX(), generateBlockPos(fissurePos, sender).getY(), fissurePos.getZ());
                         sender.displayClientMessage(new StringTextComponent("Rift Manipulator Status: Malfunction! Temporal anomaly detected!").withStyle(TextFormatting.BOLD).withStyle(TextFormatting.GRAY), false);
-                        sender.getLevel().playLocalSound(pos.getX(), pos.getY(), pos.getZ(), TSounds.ELECTRIC_ARC.get(), SoundCategory.AMBIENT, 1F, 1F, true);
+                        sender.getLevel().playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundRegistry.TIME_FISSURE.get(), SoundCategory.AMBIENT, 1F, 1F, true);
                     } else {
                         addToRift(sender, riftEnergy, c);
                     }

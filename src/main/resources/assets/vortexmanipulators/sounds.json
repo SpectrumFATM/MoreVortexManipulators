@@ -1,0 +1,9 @@
+{
+  "time_fissure": {
+    "category": "ambient",
+    "subtitle": "vortexmanipulators.time_fissure",
+    "sounds": [
+      "vortexmanipulators:time_fissure"
+    ]
+  }
+}

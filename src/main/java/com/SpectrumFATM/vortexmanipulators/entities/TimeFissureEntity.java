@@ -1,8 +1,11 @@
 package com.SpectrumFATM.vortexmanipulators.entities;
 
+import com.SpectrumFATM.vortexmanipulators.VortexM;
+import com.SpectrumFATM.vortexmanipulators.network.PacketSpawner;
 import com.SpectrumFATM.vortexmanipulators.network.PacketTimeFissure;
 import com.SpectrumFATM.vortexmanipulators.registries.ItemRegistry;
 import com.SpectrumFATM.vortexmanipulators.registries.NetworkHandler;
+import com.SpectrumFATM.vortexmanipulators.registry.SoundRegistry;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
@@ -14,11 +17,13 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.tardis.mod.sounds.TSounds;
 
+import javax.annotation.Nullable;
 import java.util.Random;
 
 public class TimeFissureEntity extends MobEntity implements ICapabilitySerializable<CompoundNBT> {
@@ -32,6 +37,12 @@ public class TimeFissureEntity extends MobEntity implements ICapabilitySerializa
         return MobEntity.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 10.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.25D);
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getDeathSound() {
+        return SoundRegistry.TIME_FISSURE.get();
     }
 
     @Override
@@ -101,6 +112,7 @@ public class TimeFissureEntity extends MobEntity implements ICapabilitySerializa
             }
             this.remove();
             playerEntity.playSound(TSounds.VM_TELEPORT.get(), 1.0F, 1.0F);
+            playerEntity.playSound(SoundRegistry.TIME_FISSURE.get(), 1.0F, 1.0F);
         }
         return super.mobInteract(playerEntity, hand);
     }
@@ -123,6 +135,9 @@ public class TimeFissureEntity extends MobEntity implements ICapabilitySerializa
         if (random.nextInt(12000) == 1) {
             //Occurs approx every 10 minutes.
             //This is one minecraft day.
+            NetworkHandler.INSTANCE.sendToServer(new PacketSpawner());
+            VortexM.LOGGER.info("Time Fissure: Spawning Graske");
+            this.playSound(SoundRegistry.TIME_FISSURE.get(), 1.0F, 1.0F);
         }
     }
 }

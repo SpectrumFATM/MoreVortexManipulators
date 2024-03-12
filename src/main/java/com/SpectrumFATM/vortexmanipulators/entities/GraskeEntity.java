@@ -4,17 +4,14 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.LookAtGoal;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.SwimGoal;
-import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
+import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.merchant.villager.VillagerEntity;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
-import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 
-public class GraskeEntity extends MonsterEntity implements ICapabilitySerializable<CompoundNBT> {
+public class GraskeEntity extends MonsterEntity {
 
     public GraskeEntity(EntityType<? extends MonsterEntity> entityType, World world) {
         super(entityType, world);
@@ -24,25 +21,25 @@ public class GraskeEntity extends MonsterEntity implements ICapabilitySerializab
     public static AttributeModifierMap.MutableAttribute setCustomAttribute() {
         return MobEntity.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 30.0D)
-                .add(Attributes.MOVEMENT_SPEED, 0.25D);
+                .add(Attributes.MOVEMENT_SPEED, 0.25D)
+                .add(Attributes.ATTACK_DAMAGE, 5.0D)
+                .add(Attributes.FOLLOW_RANGE, 35.0D)
+                .add(Attributes.ARMOR, 2.0D)
+                .add(Attributes.KNOCKBACK_RESISTANCE, 2.0D)
+                .add(Attributes.ATTACK_KNOCKBACK, 1.0D);
     }
 
-    //TODO: Write hostile code.
     @Override
     protected void registerGoals() {
         super.registerGoals();
         this.goalSelector.addGoal(0, new SwimGoal(this));
-        //this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0D, false));
-        this.goalSelector.addGoal(7, new WaterAvoidingRandomWalkingGoal(this, 1.0D, 0.0F));
-        this.goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8.0F));
-        this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
-       // this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
-       // this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
-    }
-
-    @Override
-    public void remove() {
-        super.remove();
+        this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.0D, true)); // Increased priority
+        this.goalSelector.addGoal(2, new WaterAvoidingRandomWalkingGoal(this, 1.0D, 0.0F));
+        this.goalSelector.addGoal(3, new LookAtGoal(this, PlayerEntity.class, 8.0F));
+        this.goalSelector.addGoal(4, new LookRandomlyGoal(this));
+        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, VillagerEntity.class, true));
+        this.targetSelector.addGoal(0, new HurtByTargetGoal(this));
     }
 
     @Override
@@ -54,5 +51,4 @@ public class GraskeEntity extends MonsterEntity implements ICapabilitySerializab
     public void spawnAnim() {
         super.spawnAnim();
     }
-
 }

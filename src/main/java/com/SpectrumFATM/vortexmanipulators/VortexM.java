@@ -1,11 +1,9 @@
 package com.SpectrumFATM.vortexmanipulators;
 
-import com.SpectrumFATM.vortexmanipulators.entities.TimeFissureEntity;
 import com.SpectrumFATM.vortexmanipulators.registries.*;
-import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
+import com.SpectrumFATM.vortexmanipulators.registry.SoundRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -27,13 +25,10 @@ public class VortexM {
         BlockRegistry.init();
         ItemRegistry.init();
         MobRegistry.init();
+        SoundRegistry.SOUND_EVENTS.register(modBus);
     }
 
     private void setup(final FMLCommonSetupEvent event) {
-        DeferredWorkQueue.runLater(() -> {
-            GlobalEntityTypeAttributes.put(MobRegistry.FISSURE.get(), TimeFissureEntity.setCustomAttribute().build());
-            GlobalEntityTypeAttributes.put(MobRegistry.GRASKE.get(), TimeFissureEntity.setCustomAttribute().build());
-        });
         VortexFunctions.addFunctionToCategories();
         NetworkHandler.registerMessages();
     }

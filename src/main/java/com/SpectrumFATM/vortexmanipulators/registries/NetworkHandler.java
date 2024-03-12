@@ -85,6 +85,12 @@ public class NetworkHandler {
                 PacketTemporalScan::toBytes,
                 PacketTemporalScan::new,
                 PacketTemporalScan::handle);
+
+        INSTANCE.registerMessage(nextID(),
+                PacketSpawner.class,
+                PacketSpawner::toBytes,
+                PacketSpawner::new,
+                PacketSpawner::handle);
     }
 }
  
